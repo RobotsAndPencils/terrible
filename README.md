@@ -1,4 +1,4 @@
-# terrible
+# Terrible
 A command line tool for transforming [terraform](https://terraform.io/) state into [ansible](http://docs.ansible.com/) inventory files
 
 ### Installing
@@ -6,7 +6,10 @@ A command line tool for transforming [terraform](https://terraform.io/) state in
     pip install git+git://github.com/RobotsAndPencils/terrible
 
 ### Using
-
+    terrible --template-path <path to templates> \
+    --template ansible-inventory.j2 \
+    --tfstate terraform.tfstate \ 
+    --inventory-output inventory.ini \
 ### Contributing
 
     git clone git@github.com:RobotsAndPencils/terrible.git
