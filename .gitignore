@@ -54,3 +54,6 @@ docs/_build/
 
 # Virtualenv
 .venv
+
+# Tests output
+tests_resources/test_output

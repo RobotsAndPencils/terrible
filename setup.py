@@ -31,7 +31,7 @@ Translates [terraform](https://terraform.io/) state into an [ansible](http://doc
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
         'Operating System :: Unix',
         'Programming Language :: Python :: 2.7',
@@ -44,6 +44,8 @@ Translates [terraform](https://terraform.io/) state into an [ansible](http://doc
     install_requires=[
         # add your dependencies here
         # remember to use 'package-name>=x.y.z,<x.y+1.0' notation (this way you get bugfixes)
+        "click>=4.0, <4.9",
+        "jinja2>=2.7.3,<2.8"
     ],
     extras_require={
         'tests': tests_require,
@@ -51,7 +53,7 @@ Translates [terraform](https://terraform.io/) state into an [ansible](http://doc
     entry_points={
         'console_scripts': [
             # add cli scripts here in this form:
-            # 'terrible=terrible.cli:main',
+            'terrible=terrible.__main__:main'
         ],
     },
 )
