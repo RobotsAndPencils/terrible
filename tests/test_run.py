@@ -11,7 +11,6 @@ import os
 
 
 class CompileTemplateTestCase(TestCase):
-
     def test_compile_template(self):
         base_dir = os.path.dirname(os.path.realpath(__file__)) + "/../"
         template_path = "%stests_resources/" % base_dir
@@ -36,8 +35,8 @@ class CompileTemplateTestCase(TestCase):
 
 
     def test_missing_required_params(self):
-    	base_dir = os.path.dirname(os.path.realpath(__file__)) + "/../"
-    	template_path = "%stests_resources/" % base_dir
+        base_dir = os.path.dirname(os.path.realpath(__file__)) + "/../"
+        template_path = "%stests_resources/" % base_dir
         template = "ansible-inventory.j2"
         tfstate = "%stests_resources/terraform.tfstate" % base_dir
         inventory_output = "%stests_resources/test_output" % base_dir
@@ -45,7 +44,7 @@ class CompileTemplateTestCase(TestCase):
         runner = CliRunner()
         # Missing --template-path arg
         result = runner.invoke(compile_template, [
-        	'--template', template,
+            '--template', template,
             '--tfstate', tfstate,
             '--inventory-output', inventory_output])
 
@@ -53,11 +52,10 @@ class CompileTemplateTestCase(TestCase):
 
         # Missing --template arg
         result = runner.invoke(compile_template, [
-        	'--template-path', template_path,
+            '--template-path', template_path,
             '--tfstate', tfstate,
             '--inventory-output', inventory_output])
 
-        
         expect(result.exit_code).to_be_greater_than(0)
 
         # Missing --tfstate arg

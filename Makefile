@@ -12,7 +12,7 @@ setup:
 test: unit
 
 unit:
-	@coverage run --branch `which nosetests` -vv --with-yanc -s tests/
+	@coverage run --branch `which nosetests` --with-yanc tests/
 	@coverage report -m --fail-under=80
 
 # show coverage in html format

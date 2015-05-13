@@ -7,8 +7,10 @@
 # Webservers        #
 #####################
 [webservers]
-{% for key, value in resources.iteritems() -%}
-{% if "service" in key %}
+{% for resource in resources -%}
+{% for key, value in resource.iteritems() -%}
+{% if not False and "service" in key %}
 {{ value.primary.attributes.public_ip }} ansible_ssh_user=ubuntu
 {% endif %}
+{%- endfor %}
 {%- endfor %}
