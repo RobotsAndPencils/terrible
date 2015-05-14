@@ -20,7 +20,7 @@ def compile_template(template_path, template, tfstate, inventory_output):
     --tfstate terraform.tfstate
     --inventory-output inventory.ini
     """
-    
+
     if template_path is None:
         raise ClickException("--template-path cannot be null")
     elif not os.path.isdir(template_path):
@@ -37,15 +37,14 @@ def compile_template(template_path, template, tfstate, inventory_output):
         raise ClickException("--tfstate file cannot be found")
 
     if inventory_output is None:
-        raise ClickException("--inventory-output must be specified")        
+        raise ClickException("--inventory-output must be specified")
 
-    
     tfstate_dict = parse_tfstate(tfstate)
     env = Environment(loader=FileSystemLoader(template_path))
     ansible_inventory_template = env.get_template(template)
 
-    terraform_resources = tfstate_dict.get('modules').pop().get('resources')
-
+    terraform_resources = [module.get('resources') for module in tfstate_dict.get('modules')]
+    terraform_resources = filter(None, terraform_resources)
     rendered = ansible_inventory_template.render(resources=terraform_resources)
 
     output_template = open(inventory_output, "w")
