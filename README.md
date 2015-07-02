@@ -9,6 +9,7 @@ Terrafrom is great at deploying infrastructure. This project aims to make using 
 
 ### Using
 Write your terraform config as you usually would
+
     # app.tf
     resource "aws_instance" "app-server" {
         ami = "aminumber"
@@ -60,7 +61,9 @@ Now you can do normal ansible commands
 ### Contributing
 
     git clone git@github.com:RobotsAndPencils/terrible.git
+
 You may want to set up a [virtualenv](https://virtualenv.pypa.io/en/latest/installation.html) by running `virtualenv .venv; source .venv/bin/activate` before you use the make file.
+
     make setup
     make test
 
