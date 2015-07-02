@@ -1,7 +1,7 @@
 # Terrible
 A command line tool for transforming [terraform](https://terraform.io/) state into [ansible](http://docs.ansible.com/) inventory files
 
-Terrafrom is great at deploying infrastructure. This project aims to make using ansible and terraform together easy.
+Terraform is great at deploying infrastructure. This project aims to make using ansible and terraform together easy.
 
 ### Installing
 
