@@ -35,7 +35,7 @@ Create a [Jinja2](http://jinja.pocoo.org/) template for your ansible [inventory 
     {% for key, value in resource.iteritems() -%}
     {% if "aws_instance.app-server" in key %}
 
-    [prometheus]
+    [app-server]
     # you can reference any terraform attribute
     # https://www.terraform.io/docs/providers/aws/r/instance.html
     {{ value.primary.attributes.public_ip }} ansible_ssh_user=ubuntu
@@ -56,7 +56,7 @@ Run terraform normally, then use terrible to convert terraform state to ansible 
 
 Now you can do normal ansible commands
 
-    ansible prometheus -m ping --inventory-file=inventory.ini
+    ansible app-server -m ping --inventory-file=inventory.ini
 
 ### Contributing
 
