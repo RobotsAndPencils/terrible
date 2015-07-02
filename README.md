@@ -1,15 +1,62 @@
 # Terrible
 A command line tool for transforming [terraform](https://terraform.io/) state into [ansible](http://docs.ansible.com/) inventory files
 
+Terrafrom is great at deploying infrastructure. This project aims to make using ansible and terraform together easy.
+
 ### Installing
 
     pip install git+git://github.com/RobotsAndPencils/terrible
 
 ### Using
-    terrible --template-path <path to templates> \
+Write your terraform config as you usually would
+    # app.tf
+    resource "aws_instance" "app-server" {
+        ami = "aminumber"
+        instance_type = "t2.small"
+        key_name = "keyname"
+        count = 1
+        tags {
+            Name = "server"
+        }
+
+        connection {
+            user = "ubuntu"
+            key_file = "key_path"
+        }
+    }
+
+Create a [Jinja2](http://jinja.pocoo.org/) template for your ansible [inventory file](http://docs.ansible.com/intro_inventory.html)
+
+    # ansible-inventory.j2
+    # Inventory for provisioning app-server
+    #
+    {% for resource in resources %}
+    {% for key, value in resource.iteritems() -%}
+    {% if "aws_instance.app-server" in key %}
+
+    [prometheus]
+    # you can reference any terraform attribute
+    # https://www.terraform.io/docs/providers/aws/r/instance.html
+    {{ value.primary.attributes.public_ip }} ansible_ssh_user=ubuntu
+
+    {%- endif %}
+    {%- endfor %}
+    {%- endfor %}
+
+Run terraform normally, then use terrible to convert terraform state to ansible inventory
+
+    terraform plan
+    terraform apply
+
+    terrible --template-path $PWD \
     --template ansible-inventory.j2 \
-    --tfstate terraform.tfstate \ 
+    --tfstate terraform.tfstate \
     --inventory-output inventory.ini \
+
+Now you can do normal ansible commands
+
+    ansible prometheus -m ping --inventory-file=inventory.ini
+
 ### Contributing
 
     git clone git@github.com:RobotsAndPencils/terrible.git
